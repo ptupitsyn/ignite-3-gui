@@ -6,7 +6,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="IgniteGui.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="IgniteGui">
+        Title="IgniteGui"
+        x:DataType="vm:MainWindowViewModel"
+        x:CompileBindings="True">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
