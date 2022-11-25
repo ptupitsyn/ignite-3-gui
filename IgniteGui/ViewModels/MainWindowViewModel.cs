@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Apache.Ignite;
+using Apache.Ignite.Sql;
 using Apache.Ignite.Table;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -73,6 +74,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
     private async Task RunQuery()
     {
         if (_client == null)
@@ -87,8 +89,19 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             return;
         }
 
-        await using var resultSet = await _client.Sql.ExecuteAsync(null, _query);
+        try
+        {
+            await using var resultSet = await _client.Sql.ExecuteAsync(null, _query);
+            await ReadQueryResult(resultSet);
+        }
+        catch (Exception e)
+        {
+            QueryResult = "Failed to execute query: " + e;
+        }
+    }
 
+    private async Task ReadQueryResult(IResultSet<IIgniteTuple> resultSet)
+    {
         if (!resultSet.HasRowSet)
         {
             QueryResult = $"No row set. Applied: {resultSet.WasApplied}. Affected rows: {resultSet.AffectedRows}.";
