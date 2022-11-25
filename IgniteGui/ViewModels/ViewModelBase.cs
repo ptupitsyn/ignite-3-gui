@@ -1,7 +1,8 @@
-﻿using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace IgniteGui.ViewModels;
 
-public class ViewModelBase : ReactiveObject
+public class ViewModelBase : ObservableObject
 {
+
 }
