@@ -13,9 +13,14 @@
     </Design.DataContext>
 
     <StackPanel>
-        <Grid ColumnDefinitions="*, 150">
+        <Grid ColumnDefinitions="*, 150" IsEnabled="{Binding !IsLoading}">
             <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" />
-            <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5">Connect</Button>
+            <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5" Command="{Binding ConnectCommand}">
+                <Panel>
+                    <TextBlock Text="Disconnect" IsVisible="{Binding IsConnected}" />
+                    <TextBlock Text="Connect" IsVisible="{Binding !IsConnected}" />
+                </Panel>
+            </Button>
         </Grid>
         <TextBlock Text="{Binding Status}" Margin="5" />
     </StackPanel>
