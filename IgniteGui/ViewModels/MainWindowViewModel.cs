@@ -24,7 +24,10 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         ConnectCommand = ReactiveCommand.CreateFromTask(Connect);
+
+        _ = Connect();
     }
+
     public string ConnectionString {
         get => _connectionString;
         set => this.RaiseAndSetIfChanged(ref _connectionString, value);
