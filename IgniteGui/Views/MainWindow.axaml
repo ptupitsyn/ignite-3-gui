@@ -14,7 +14,7 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel>
+    <Grid RowDefinitions="Auto, Auto, *">
         <Grid ColumnDefinitions="*, 150" IsEnabled="{Binding !IsLoading}">
             <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" />
             <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5" Command="{Binding ConnectCommand}">
@@ -24,7 +24,11 @@
                 </Panel>
             </Button>
         </Grid>
-        <TextBlock Text="{Binding Status}" Margin="5" />
-    </StackPanel>
+        <TextBlock Text="{Binding Status}" Margin="5" Grid.Row="1" />
+        <Grid ColumnDefinitions="*, 3*" Grid.Row="2">
+            <ListBox Margin="5"></ListBox>
+            <TextBox Margin="5" Grid.Column="1"></TextBox>
+        </Grid>
+    </Grid>
 
 </Window>
