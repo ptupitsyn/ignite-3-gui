@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Apache.Ignite;
@@ -26,6 +27,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private ITable? _selectedTable;
 
     [ObservableProperty] private string _query = string.Empty;
+
+    [ObservableProperty] private string _queryResult = string.Empty;
 
     private IIgniteClient? _client;
 
@@ -68,6 +71,55 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             _connectionSemaphore.Release();
             OnPropertyChanged(nameof(IsConnected));
         }
+    }
+
+    private async Task RunQuery()
+    {
+        if (_client == null)
+        {
+            QueryResult = "Not connected.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(Query))
+        {
+            QueryResult = "Query is empty.";
+            return;
+        }
+
+        await using var resultSet = await _client.Sql.ExecuteAsync(null, _query);
+
+        if (!resultSet.HasRowSet)
+        {
+            QueryResult = $"No row set. Applied: {resultSet.WasApplied}. Affected rows: {resultSet.AffectedRows}.";
+            return;
+        }
+
+        var sb = new StringBuilder();
+
+        // Header.
+        foreach (var column in resultSet.Metadata!.Columns)
+        {
+            sb.Append(column.Name)
+                .Append(" (")
+                .Append(column.Type)
+                .Append("), ");
+        }
+
+        sb.AppendLine();
+
+        // Rows.
+        await foreach (var row in resultSet)
+        {
+            for (int i = 0; i < row.FieldCount; i++)
+            {
+                sb.Append(row[i] ?? "NULL").Append(", ");
+            }
+
+            sb.AppendLine();
+        }
+
+        QueryResult = sb.ToString();
     }
 
     partial void OnSelectedTableChanged(ITable? value)
