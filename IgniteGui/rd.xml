@@ -1,7 +1,7 @@
 <Directives>
     <Application>
         <!-- main app assembly provides types which needs to be reflected upon -->
-        <Assembly Name="AvaloniaCoreRTDemo" Dynamic="Required All"></Assembly>
+        <Assembly Name="IgniteGui" Dynamic="Required All"></Assembly>
 
         <!-- these are needed when you show images and draw text -->
         <Assembly Name="Avalonia.Animation">
