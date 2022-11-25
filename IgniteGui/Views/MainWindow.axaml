@@ -16,7 +16,7 @@
 
     <Grid RowDefinitions="Auto, Auto, *">
         <Grid ColumnDefinitions="*, 150" IsEnabled="{Binding !IsLoading}">
-            <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" />
+            <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" IsEnabled="{Binding !IsConnected}" />
             <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5" Command="{Binding ConnectCommand}">
                 <Panel>
                     <TextBlock Text="Disconnect" IsVisible="{Binding IsConnected}" />
@@ -26,7 +26,13 @@
         </Grid>
         <TextBlock Text="{Binding Status}" Margin="5" Grid.Row="1" />
         <Grid ColumnDefinitions="*, 3*" Grid.Row="2">
-            <ListBox Margin="5"></ListBox>
+            <ListBox Margin="5" Items="{Binding Tables}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <TextBox Margin="5" Grid.Column="1"></TextBox>
         </Grid>
     </Grid>
