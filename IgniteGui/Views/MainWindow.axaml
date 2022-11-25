@@ -12,9 +12,12 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <StackPanel Orientation="Vertical">
-        <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" />
-        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <StackPanel>
+        <Grid ColumnDefinitions="*, 150">
+            <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" />
+            <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5">Connect</Button>
+        </Grid>
+        <TextBlock Text="{Binding Status}" Margin="5" />
     </StackPanel>
 
 </Window>
