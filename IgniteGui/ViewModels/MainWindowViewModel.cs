@@ -35,7 +35,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        _ = Connect();
+        Task.Run(Connect);
     }
 
     public bool IsConnected => _client != null;
