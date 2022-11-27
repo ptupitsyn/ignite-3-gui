@@ -64,7 +64,8 @@
                           CanUserReorderColumns="True" CanUserResizeColumns="True" IsReadOnly="True" />
             </TabItem>
             <TabItem Header="📜 Log">
-                <ListBox Items="{Binding Log}" />
+                <DataGrid Name="LogGrid" Items="{Binding Log}" AutoGenerateColumns="True"
+                          CanUserReorderColumns="True" CanUserResizeColumns="True" IsReadOnly="True" />
             </TabItem>
         </TabControl>
     </Grid>

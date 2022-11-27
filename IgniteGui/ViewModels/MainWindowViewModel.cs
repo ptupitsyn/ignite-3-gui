@@ -43,7 +43,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     public bool IsConnected => _client != null;
 
-    public ObservableCollection<string> Log { get; } = new();
+    public ObservableCollection<ObservableCollectionLogger.Entry> Log { get; } = new();
 
     [RelayCommand]
     private async Task Connect()
