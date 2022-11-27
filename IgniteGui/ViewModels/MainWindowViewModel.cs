@@ -143,9 +143,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     partial void OnSelectedTableChanged(ITable? value)
     {
-        if (value != null)
+        if (value != null && string.IsNullOrWhiteSpace(Query))
         {
-            Query = "select * from " + value.Name;
+            Query = $"select * from {value.Name} limit 10";
         }
     }
 }
