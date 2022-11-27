@@ -27,7 +27,7 @@
             </Button>
         </Grid>
         <Panel Grid.Row="1" Margin="5">
-            <ProgressBar Orientation="Horizontal" IsIndeterminate="True" Margin="0 5 0 5" IsVisible="{Binding IsLoading}" />
+            <ProgressBar Orientation="Horizontal" IsIndeterminate="True" Margin="0 6 0 6" IsVisible="{Binding IsLoading}" />
             <StackPanel Orientation="Horizontal" IsVisible="{Binding !IsLoading}">
                 <TextBlock Text="✔" IsVisible="{Binding IsConnected}" Margin="0 0 5 0" Foreground="Green" FontWeight="Bold" />
                 <TextBlock Text="X" IsVisible="{Binding !IsConnected}" Margin="0 0 5 0" Foreground="Red" FontWeight="Bold" />

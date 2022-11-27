@@ -89,6 +89,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             return;
         }
 
+        IsLoading = true;
+
         try
         {
             await using var resultSet = await _client.Sql.ExecuteAsync(null, _query);
@@ -97,6 +99,10 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         catch (Exception e)
         {
             QueryResult = "Failed to execute query: " + e;
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 
