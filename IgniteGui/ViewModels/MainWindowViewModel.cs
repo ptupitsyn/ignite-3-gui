@@ -1,11 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Apache.Ignite;
+using Apache.Ignite.Network;
 using Apache.Ignite.Sql;
 using Apache.Ignite.Table;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -23,7 +23,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private bool _isLoading;
 
-    [ObservableProperty] private IReadOnlyList<ITable> _tables = Array.Empty<ITable>();
+    [ObservableProperty] private IList<ITable> _tables = Array.Empty<ITable>();
+
+    [ObservableProperty] private IList<IClusterNode> _nodes = Array.Empty<IClusterNode>();
 
     [ObservableProperty] private ITable? _selectedTable;
 
@@ -51,7 +53,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             if (_client == null)
             {
                 _client = await IgniteClient.StartAsync(new IgniteClientConfiguration(ConnectionString));
-                Tables = (await _client.Tables.GetTablesAsync()).ToList();
+                Tables = await _client.Tables.GetTablesAsync();
+                Nodes = await _client.GetClusterNodesAsync();
                 Status = "Connected";
             }
             else
@@ -59,6 +62,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
                 _client?.Dispose();
                 _client = null;
                 Tables = Array.Empty<ITable>();
+                Nodes = Array.Empty<IClusterNode>();
                 Status = "Disconnected";
             }
         }
