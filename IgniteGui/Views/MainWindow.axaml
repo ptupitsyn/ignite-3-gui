@@ -61,7 +61,7 @@
             </TabItem>
             <TabItem Header="💻 Nodes">
                 <DataGrid Name="NodesGrid" Items="{Binding Nodes}" AutoGenerateColumns="True"
-                          CanUserReorderColumns="True" CanUserResizeColumns="True" />
+                          CanUserReorderColumns="True" CanUserResizeColumns="True" IsReadOnly="True" />
             </TabItem>
             <TabItem Header="📜 Log">
                 <ListBox Items="{Binding Log}" />
