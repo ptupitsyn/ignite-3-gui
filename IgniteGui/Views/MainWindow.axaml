@@ -60,7 +60,8 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Nodes">
-                <DataGrid Name="NodesGrid" Items="{Binding Nodes}" AutoGenerateColumns="True" />
+                <DataGrid Name="NodesGrid" Items="{Binding Nodes}" AutoGenerateColumns="True"
+                          CanUserReorderColumns="True" CanUserResizeColumns="True" />
             </TabItem>
         </TabControl>
     </Grid>
