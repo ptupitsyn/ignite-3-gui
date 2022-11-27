@@ -13,13 +13,15 @@
         x:CompileBindings="True">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <Grid RowDefinitions="Auto, Auto, *">
         <Grid ColumnDefinitions="*, 150" IsEnabled="{Binding !IsLoading}">
-            <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" IsEnabled="{Binding !IsConnected}" />
-            <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5" Command="{Binding ConnectCommand}">
+            <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5"
+                     IsEnabled="{Binding !IsConnected}" />
+            <Button Grid.Column="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5"
+                    Command="{Binding ConnectCommand}">
                 <Panel>
                     <TextBlock Text="Disconnect" IsVisible="{Binding IsConnected}" />
                     <TextBlock Text="Connect" IsVisible="{Binding !IsConnected}" />
@@ -27,25 +29,40 @@
             </Button>
         </Grid>
         <Panel Grid.Row="1" Margin="5">
-            <ProgressBar Orientation="Horizontal" IsIndeterminate="True" Margin="0 6 0 6" IsVisible="{Binding IsLoading}" />
+            <ProgressBar Orientation="Horizontal" IsIndeterminate="True" Margin="0 6 0 6"
+                         IsVisible="{Binding IsLoading}" />
             <StackPanel Orientation="Horizontal" IsVisible="{Binding !IsLoading}">
-                <TextBlock Text="✔" IsVisible="{Binding IsConnected}" Margin="0 0 5 0" Foreground="Green" FontWeight="Bold" />
-                <TextBlock Text="X" IsVisible="{Binding !IsConnected}" Margin="0 0 5 0" Foreground="Red" FontWeight="Bold" />
+                <TextBlock Text="✔" IsVisible="{Binding IsConnected}" Margin="0 0 5 0" Foreground="Green"
+                           FontWeight="Bold" />
+                <TextBlock Text="X" IsVisible="{Binding !IsConnected}" Margin="0 0 5 0" Foreground="Red"
+                           FontWeight="Bold" />
                 <TextBlock Text="{Binding Status}" />
             </StackPanel>
         </Panel>
-        <Grid ColumnDefinitions="*, 3*" RowDefinitions="*, Auto, 2*" Grid.Row="2">
-            <ListBox Margin="5" Items="{Binding Tables}" SelectedItem="{Binding SelectedTable}" Grid.RowSpan="3">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Query}" AcceptsReturn="True" AcceptsTab="True" />
-            <Button Grid.Row="1" Grid.Column="1" Margin="5" Command="{Binding RunQueryCommand}" HotKey="Ctrl+Enter">Run Query (Ctrl + Enter)</Button>
-            <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding QueryResult}" IsReadOnly="True" />
-        </Grid>
+        <TabControl Grid.Row="2">
+            <TabItem Header="Tables">
+                <Grid ColumnDefinitions="*, 3*" RowDefinitions="*, Auto, 2*">
+                    <ListBox Items="{Binding Tables}" SelectedItem="{Binding SelectedTable}" Grid.RowSpan="3" Margin="0 5 5 5">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Query}" AcceptsReturn="True"
+                             AcceptsTab="True" Watermark="Query" />
+                    <Button Grid.Row="1" Grid.Column="1" Margin="5" Command="{Binding RunQueryCommand}"
+                            HotKey="Ctrl+Enter">
+                        Run Query (Ctrl + Enter)
+                    </Button>
+                    <TextBox Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding QueryResult}" IsReadOnly="True"
+                             Watermark="Query results" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Nodes">
+                <ListBox></ListBox>
+            </TabItem>
+        </TabControl>
     </Grid>
 
 </Window>
