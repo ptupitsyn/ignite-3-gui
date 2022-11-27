@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -42,6 +43,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     public bool IsConnected => _client != null;
 
+    public ObservableCollection<string> Log { get; } = new();
+
     [RelayCommand]
     private async Task Connect()
     {
@@ -52,7 +55,12 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         {
             if (_client == null)
             {
-                _client = await IgniteClient.StartAsync(new IgniteClientConfiguration(ConnectionString));
+                var cfg = new IgniteClientConfiguration(ConnectionString)
+                {
+                    Logger = new ObservableCollectionLogger(Log)
+                };
+
+                _client = await IgniteClient.StartAsync(cfg);
                 Tables = await _client.Tables.GetTablesAsync();
                 Nodes = (await _client.GetClusterNodesAsync())
                     .Select(n => new ClusterNode(n.Id, n.Name, n.Address.ToString()))
