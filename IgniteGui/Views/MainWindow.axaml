@@ -16,27 +16,6 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Window.Styles>
-        <Style Selector="TextBlock.spinner">
-            <Style.Animations>
-                <Animation Duration="0:0:1" IterationCount="INFINITE">
-                    <KeyFrame Cue="0%">
-                        <Setter Property="RotateTransform.Angle" Value="0.0"/>
-                    </KeyFrame>
-                    <KeyFrame Cue="100%">
-                        <Setter Property="RotateTransform.Angle" Value="360"/>
-                    </KeyFrame>
-                </Animation>
-            </Style.Animations>
-            <Style.Setters>
-                <Setter Property="RenderTransform">
-                    <RotateTransform Angle="0"></RotateTransform>
-                </Setter>
-                <Setter Property="RenderTransformOrigin" Value="9,9" />
-            </Style.Setters>
-        </Style>
-    </Window.Styles>
-
     <Grid RowDefinitions="Auto, Auto, *">
         <Grid ColumnDefinitions="*, 150" IsEnabled="{Binding !IsLoading}">
             <TextBox Text="{Binding ConnectionString, Mode=TwoWay}" Grid.Column="0" Margin="5" IsEnabled="{Binding !IsConnected}" />
@@ -48,7 +27,7 @@
             </Button>
         </Grid>
         <Panel Grid.Row="1" Margin="5">
-            <TextBlock Text="◌" FontWeight="Bold" FontSize="16" Classes="spinner" IsVisible="{Binding IsLoading}" />
+            <ProgressBar Orientation="Horizontal" IsIndeterminate="True" Margin="0 5 0 5" IsVisible="{Binding IsLoading}" />
             <StackPanel Orientation="Horizontal" IsVisible="{Binding !IsLoading}">
                 <TextBlock Text="✔" IsVisible="{Binding IsConnected}" Margin="0 0 5 0" Foreground="Green" FontWeight="Bold" />
                 <TextBlock Text="X" IsVisible="{Binding !IsConnected}" Margin="0 0 5 0" Foreground="Red" FontWeight="Bold" />
