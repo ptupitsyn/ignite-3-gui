@@ -11,6 +11,7 @@
 
 ## TBD
 
+* Detect disconnect - missing Ignite API?
 * Internal schemas tab.
 * Admin tab (uses REST API).
 * Tables as tree view with columns.

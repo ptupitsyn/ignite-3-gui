@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using Apache.Ignite.Log;
+using Avalonia.Threading;
 
 namespace IgniteGui.ViewModels;
 
@@ -23,7 +24,7 @@ public class ObservableCollectionLogger : IIgniteLogger
             msg += $"(error: '{ex.Message}')";
         }
 
-        _log.Add(new Entry(DateTime.Now, level, msg, category));
+        Dispatcher.UIThread.Post(() => _log.Add(new Entry(DateTime.Now, level, msg, category)));
     }
 
     public bool IsEnabled(LogLevel level) => level >= LogLevel.Debug;
