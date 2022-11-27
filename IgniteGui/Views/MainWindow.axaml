@@ -60,7 +60,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Nodes">
-                <ListBox></ListBox>
+                <DataGrid Name="NodesGrid" Items="{Binding Nodes}" AutoGenerateColumns="True" />
             </TabItem>
         </TabControl>
     </Grid>

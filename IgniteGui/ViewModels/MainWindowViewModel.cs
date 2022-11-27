@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +27,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private IList<ITable> _tables = Array.Empty<ITable>();
 
-    [ObservableProperty] private IList<IClusterNode> _nodes = Array.Empty<IClusterNode>();
+    [ObservableProperty] private IList<ClusterNode> _nodes = Array.Empty<ClusterNode>();
 
     [ObservableProperty] private ITable? _selectedTable;
 
@@ -54,7 +56,10 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             {
                 _client = await IgniteClient.StartAsync(new IgniteClientConfiguration(ConnectionString));
                 Tables = await _client.Tables.GetTablesAsync();
-                Nodes = await _client.GetClusterNodesAsync();
+                Nodes = (await _client.GetClusterNodesAsync())
+                    .Select(n => new ClusterNode(n.Id, n.Name, n.Address.ToString()))
+                    .ToList();
+
                 Status = "Connected";
             }
             else
@@ -62,7 +67,8 @@ public sealed partial class MainWindowViewModel : ViewModelBase
                 _client?.Dispose();
                 _client = null;
                 Tables = Array.Empty<ITable>();
-                Nodes = Array.Empty<IClusterNode>();
+                Nodes = Array.Empty<ClusterNode>();
+
                 Status = "Disconnected";
             }
         }
@@ -152,4 +158,6 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             Query = $"select * from {value.Name} limit 10";
         }
     }
+
+    public record ClusterNode(string Id, string Name, string Address);
 }
