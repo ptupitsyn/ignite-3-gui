@@ -42,7 +42,8 @@
         <TabControl Grid.Row="2">
             <TabItem Header="📑 Tables">
                 <Grid ColumnDefinitions="*, 3*" RowDefinitions="*, Auto, 2*">
-                    <ListBox Items="{Binding Tables}" SelectedItem="{Binding SelectedTable}" Grid.RowSpan="3" Margin="0 5 5 5">
+                    <ListBox Items="{Binding Tables}" SelectedItem="{Binding SelectedTable}" Grid.RowSpan="3" Margin="0 5 5 5"
+                             DoubleTapped="ListBox_OnDoubleTapped">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />

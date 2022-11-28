@@ -37,7 +37,6 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private string _queryResult = string.Empty;
 
-
     private IIgniteClient? _client;
 
     public MainWindowViewModel()
@@ -48,6 +47,14 @@ public sealed partial class MainWindowViewModel : ViewModelBase
     public bool IsConnected => _client != null;
 
     public ObservableCollection<ObservableCollectionLogger.Entry> Log { get; } = new();
+
+    public void GenerateQuery()
+    {
+        if (SelectedTable != null)
+        {
+            Query = $"select * from {SelectedTable.Name} limit 10";
+        }
+    }
 
     private async Task Init()
     {
@@ -193,9 +200,9 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     partial void OnSelectedTableChanged(ITable? value)
     {
-        if (value != null && string.IsNullOrWhiteSpace(Query))
+        if (string.IsNullOrWhiteSpace(Query))
         {
-            Query = $"select * from {value.Name} limit 10";
+            GenerateQuery();
         }
     }
 

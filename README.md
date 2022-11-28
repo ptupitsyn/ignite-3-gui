@@ -12,7 +12,6 @@
 ## TBD
 
 * Detect disconnect - missing Ignite API?
-* Connections tab.
 * Tab descriptions.
 * Internal schemas tab.
 * Admin tab (uses REST API).
