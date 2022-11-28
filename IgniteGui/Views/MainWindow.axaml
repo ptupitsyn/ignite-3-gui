@@ -50,7 +50,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <TextBox Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding Query}" AcceptsReturn="True"
-                             AcceptsTab="True" Watermark="Query" />
+                             AcceptsTab="True" Watermark="SQL" />
                     <Button Grid.Row="1" Grid.Column="1" Margin="5" Command="{Binding RunQueryCommand}"
                             HotKey="Ctrl+Enter">
                         Run Query (Ctrl + Enter)
@@ -61,6 +61,10 @@
             </TabItem>
             <TabItem Header="💻 Nodes">
                 <DataGrid Name="NodesGrid" Items="{Binding Nodes}" AutoGenerateColumns="True"
+                          CanUserReorderColumns="True" CanUserResizeColumns="True" IsReadOnly="True" />
+            </TabItem>
+            <TabItem Header="🔗 Connections">
+                <DataGrid Name="ConnectionsGrid" Items="{Binding Connections}" AutoGenerateColumns="True"
                           CanUserReorderColumns="True" CanUserResizeColumns="True" IsReadOnly="True" />
             </TabItem>
             <TabItem Header="📜 Log">

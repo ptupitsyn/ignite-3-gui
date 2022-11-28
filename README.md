@@ -12,7 +12,10 @@
 ## TBD
 
 * Detect disconnect - missing Ignite API?
+* Connections tab.
+* Tab descriptions.
 * Internal schemas tab.
 * Admin tab (uses REST API).
 * Tables as tree view with columns.
 * Generate POCOs from table schema.
+* Error in the log on disconnect?

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Apache.Ignite;
+using Apache.Ignite.Network;
 using Apache.Ignite.Sql;
 using Apache.Ignite.Table;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -28,22 +29,35 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private IList<ClusterNode> _nodes = Array.Empty<ClusterNode>();
 
+    [ObservableProperty] private IList<IClusterNode> _connections = Array.Empty<IClusterNode>();
+
     [ObservableProperty] private ITable? _selectedTable;
 
     [ObservableProperty] private string _query = string.Empty;
 
     [ObservableProperty] private string _queryResult = string.Empty;
 
+
     private IIgniteClient? _client;
 
     public MainWindowViewModel()
     {
-        Task.Run(Connect);
+        Task.Run(Init);
     }
 
     public bool IsConnected => _client != null;
 
     public ObservableCollection<ObservableCollectionLogger.Entry> Log { get; } = new();
+
+    private async Task Init()
+    {
+        // Small delay to let the UI update.
+        await Task.Delay(1000);
+
+        // Init.
+        await Connect();
+        await Refresh();
+    }
 
     [RelayCommand]
     private async Task Connect()
@@ -155,6 +169,26 @@ public sealed partial class MainWindowViewModel : ViewModelBase
         }
 
         QueryResult = sb.ToString();
+    }
+
+    private async Task Refresh()
+    {
+        while (true)
+        {
+            if (_client != null)
+            {
+                try
+                {
+                    Connections = _client.GetConnections();
+                }
+                catch (Exception e)
+                {
+                    Status = "Failed to refresh: " + e.Message;
+                }
+            }
+
+            await Task.Delay(1000);
+        }
     }
 
     partial void OnSelectedTableChanged(ITable? value)
