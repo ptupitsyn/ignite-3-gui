@@ -186,7 +186,16 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             {
                 try
                 {
-                    Connections = _client.GetConnections();
+                    var connections = _client.GetConnections();
+
+                    if (connections.Count != Connections.Count ||
+                        connections.Select(c => c.Id).Except(Connections.Select(c => c.Id)).Any())
+                    {
+                        Connections = connections;
+                    }
+                    {
+                        Connections = connections;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -194,7 +203,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
                 }
             }
 
-            await Task.Delay(1000);
+            await Task.Delay(15_000);
         }
     }
 
