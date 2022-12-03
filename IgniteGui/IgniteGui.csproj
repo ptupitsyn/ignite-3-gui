@@ -8,6 +8,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
 <!--    <PublishAot>true</PublishAot>-->
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>
