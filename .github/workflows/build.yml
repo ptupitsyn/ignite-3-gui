@@ -1,0 +1,31 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        name: Cache NuGet Packages
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - uses: actions/cache@v3
+        name: Cache Build Output
+        with:
+          path: src
+          key: ${{ runner.os }}-dotnet-build-${{ github.sha }}
+
+      - name: Build
+        run: dotnet build
