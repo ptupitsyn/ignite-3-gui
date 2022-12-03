@@ -59,7 +59,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
     private async Task Init()
     {
         // Small delay to let the UI update.
-        await Task.Delay(1000);
+        await Task.Delay(500);
 
         // Init.
         await Connect();
