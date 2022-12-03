@@ -21,11 +21,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - uses: actions/cache@v3
-        name: Cache Build Output
-        with:
-          path: src
-          key: ${{ runner.os }}-dotnet-build-${{ github.sha }}
-
       - name: Build
         run: dotnet build
