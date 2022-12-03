@@ -11,6 +11,7 @@
 
 ## TBD
 
+* Syntax highlighting with https://github.com/avaloniaui/avaloniaedit!
 * Detect disconnect - missing Ignite API?
 * Tab descriptions.
 * Internal schemas tab.
