@@ -14,7 +14,7 @@ public class ObservableCollectionLogger : IIgniteLogger
         _log = log;
     }
 
-    public void Log(LogLevel level, string message, object[]? args, IFormatProvider? formatProvider, string? category,
+    public void Log(LogLevel level, string message, object?[]? args, IFormatProvider? formatProvider, string? category,
         string? nativeErrorInfo, Exception? ex)
     {
         var msg = args == null ? message : string.Format(formatProvider, message, args);
