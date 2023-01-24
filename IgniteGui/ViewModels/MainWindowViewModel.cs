@@ -52,7 +52,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
     {
         if (SelectedTable != null)
         {
-            Query = $"select * from {SelectedTable.Name} limit 10";
+            Query = $"select * from {SelectedTable.Name} order by 1 limit 10";
         }
     }
 
