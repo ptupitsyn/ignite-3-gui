@@ -4,9 +4,9 @@
     "net7.0": {
       "Apache.Ignite": {
         "type": "Direct",
-        "requested": "[3.0.0-nightly, )",
-        "resolved": "3.0.0-nightly",
-        "contentHash": "ZgsALGwBrRzLJamRa6+7HoRG2QvPOsicMHokd7AToIfrsZqBUnfIvHKA8HIf7XkbnVkQQjWyLB9ABIAy+AgY6A==",
+        "requested": "[3.0.0-nightly20230124, )",
+        "resolved": "3.0.0-nightly20230124",
+        "contentHash": "SUcima6m/MiTOvG2RG4Htn5IXGpTpzZgCFaEhyxQmF8DtLEEeyS+fi+88KjKLqZs2VMV37rnef+3+nL+4x5uLQ==",
         "dependencies": {
           "Microsoft.CodeAnalysis.NetAnalyzers": "6.0.0",
           "NodaTime": "3.1.6",
