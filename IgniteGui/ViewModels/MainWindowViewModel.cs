@@ -29,7 +29,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private IList<ClusterNode> _nodes = Array.Empty<ClusterNode>();
 
-    [ObservableProperty] private IList<IClusterNode> _connections = Array.Empty<IClusterNode>();
+    [ObservableProperty] private IList<IConnectionInfo> _connections = Array.Empty<IConnectionInfo>();
 
     [ObservableProperty] private ITable? _selectedTable;
 
@@ -78,7 +78,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
             {
                 var cfg = new IgniteClientConfiguration(ConnectionString)
                 {
-                    Logger = new ObservableCollectionLogger(Log)
+                    LoggerFactory = new ObservableCollectionLoggerFactory(Log)
                 };
 
                 _client = await IgniteClient.StartAsync(cfg);
@@ -189,7 +189,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase
                     var connections = _client.GetConnections();
 
                     if (connections.Count != Connections.Count ||
-                        connections.Select(c => c.Id).Except(Connections.Select(c => c.Id)).Any())
+                        connections.Select(c => c.Node.Id).Except(Connections.Select(c => c.Node.Id)).Any())
                     {
                         Connections = connections;
                     }
